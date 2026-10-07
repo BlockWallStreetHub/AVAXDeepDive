@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Reintroduction to AVAX — Block Wall Street Course</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0a1128;--navy2:#101a3a;--navy3:#17244d;--gold:#d4a537;--gold2:#f0c75e;--ink:#eef1f8;--mute:#9aa6c4;--red:#e5645a;--green:#4cc38a;--line:rgba(212,165,55,.28)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--ink);font-family:'Barlow',Arial,sans-serif;font-size:19px;line-height:1.65}
+#side{position:fixed;left:0;top:0;bottom:0;width:290px;background:var(--navy2);border-right:1px solid var(--line);padding:26px 20px;overflow:auto;z-index:5}
+#side .brand{font-family:'Bebas Neue';font-size:30px;letter-spacing:.06em;color:var(--gold);line-height:1}
+#side .brand small{display:block;font-family:'DM Mono';font-size:11px;letter-spacing:.18em;color:var(--mute);margin-top:6px}
+#side a{display:flex;justify-content:space-between;gap:8px;color:#cfd6ea;text-decoration:none;padding:9px 10px;border-radius:8px;font-size:15px;margin-top:4px}
+#side a:hover,#side a.on{background:var(--navy3);color:#fff}
+#side a span{font-family:'DM Mono';font-size:12px;color:var(--gold2);white-space:nowrap}
+#clock{margin-top:22px;padding:14px;border:1px solid var(--line);border-radius:12px;text-align:center}
+#clock .t{font-family:'DM Mono';font-size:30px;color:var(--gold2)}
+#clock button{margin-top:8px;background:transparent;border:1px solid var(--gold);color:var(--gold2);font-family:'DM Mono';font-size:12px;padding:6px 12px;border-radius:20px;cursor:pointer;margin-right:4px}
+main{margin-left:290px;max-width:960px;padding:60px 56px 120px}
+.tag{font-family:'DM Mono';font-size:13px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+h1{font-family:'Bebas Neue';font-weight:400;font-size:96px;line-height:.95;margin:10px 0 18px}
+h1 em,h2 em{font-style:normal;color:var(--gold)}
+h2{font-family:'Bebas Neue';font-weight:400;font-size:58px;line-height:1;margin:8px 0 6px}
+h3{font-family:'Bebas Neue';font-weight:400;font-size:28px;letter-spacing:.04em;color:var(--gold2);margin:26px 0 8px}
+.lede{font-size:22px;color:var(--mute)}
+section.mod{padding-top:70px;border-top:1px solid var(--line);margin-top:70px}
+.meta{font-family:'DM Mono';font-size:13px;color:var(--mute);margin-bottom:22px}
+.say{border-left:4px solid var(--gold);padding:2px 0 2px 22px;margin:18px 0}
+.say p{margin-bottom:14px;font-size:20px;color:#e3e8f6}
+.say::before{content:'READ ALOUD';display:block;font-family:'DM Mono';font-size:11px;letter-spacing:.2em;color:var(--gold);margin-bottom:8px}
+.box{background:linear-gradient(160deg,var(--navy3),var(--navy2));border:1px solid var(--line);border-radius:14px;padding:18px 24px;margin:22px 0}
+.box h4{font-family:'DM Mono';font-size:12px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
+.box ul{margin-left:22px}.box li{margin:4px 0}
+.box.warn{border-color:rgba(229,100,90,.55)}.box.warn h4{color:var(--red)}
+.box.live{border-color:rgba(76,195,138,.5)}.box.live h4{color:var(--green)}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:16px}
+th{font-family:'DM Mono';font-size:11px;letter-spacing:.14em;color:var(--gold);text-align:left;padding:10px;border-bottom:2px solid var(--line);text-transform:uppercase}
+td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:20px 0}
+.stat{background:var(--navy2);border:1px solid var(--line);border-radius:12px;padding:16px}
+.stat b{display:block;font-family:'Bebas Neue';font-size:44px;font-weight:400;color:var(--gold);line-height:1}
+.stat span{font-size:14px;color:var(--mute)}
+b,strong{color:#fff;font-weight:600}
+a{color:var(--gold2)}
+.src{font-size:13px;color:#6d7aa0;font-family:'DM Mono';margin-top:18px}
+.q{background:var(--navy2);border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin:18px 0}
+.q p.qt{font-weight:600;font-size:19px;margin-bottom:10px}
+.q label{display:block;padding:9px 12px;border:1px solid rgba(255,255,255,.12);border-radius:8px;margin:6px 0;cursor:pointer;font-size:17px}
+.q label:hover{border-color:var(--gold)}
+.q label.ok{border-color:var(--green);background:rgba(76,195,138,.12)}
+.q label.no{border-color:var(--red);background:rgba(229,100,90,.12)}
+.q .ex{display:none;margin-top:10px;font-size:15px;color:var(--mute)}
+.q.done .ex{display:block}
+#score{font-family:'Bebas Neue';font-size:60px;color:var(--gold)}
+button.main{background:var(--gold);color:#0a1128;border:0;font-family:'Bebas Neue';font-size:22px;padding:10px 26px;border-radius:30px;cursor:pointer;letter-spacing:.06em}
+@media(max-width:900px){#side{display:none}main{margin-left:0;padding:30px 20px}h1{font-size:60px}}
+</style>
+</head>
+<body>
+<nav id="side">
+  <div class="brand">BLOCK WALL STREET<small>REINTRODUCTION TO AVAX</small></div>
+  <div id="links"></div>
+  <div id="clock"><div class="t" id="t">00:00</div><button id="go">START</button><button id="rs">RESET</button></div>
+</nav>
+<main>
+<div class="tag">Block Wall Street · Live Class · Oct 7, 2026</div>
+<h1>REINTRODUCTION<br>TO <em>AVAX</em></h1>
+
+<!-- ============ M1 ============ -->
+<section class="mod" id="m1" data-t="8 min">
+<div class="tag">Module 1</div><h2>WHAT IS <em>AVAX</em>?</h2><div class="meta">TARGET: 8 MIN · AVAX · PRIMARY NETWORK · C-CHAIN</div>
+<div class="say">
+<p>Welcome, everybody. Tonight we're reintroducing Avalanche. A lot has changed since most of you first looked at it, so we'll start with the foundation and then walk through three projects you can actually use today.</p>
+<p>Avalanche is a Layer 1 blockchain built for finance. The main network is called the Primary Network, and it runs three chains. The X-Chain handles asset creation and transfers. The P-Chain handles staking and coordination. And the one we care about tonight is the C-Chain.</p>
+<p>The C-Chain is the smart contract chain. It's compatible with Ethereum's virtual machine, the EVM. That means the same wallets you already use, like MetaMask or Rabby, work here, and developers can reuse Ethereum code. Benqi, Pharaoh and Avant all live on the C-Chain.</p>
+<p>On top of those three chains, Avalanche lets anyone launch a custom blockchain, called an L1. You may have heard them called subnets. Institutions can run their own chain with their own rules and still connect to the rest of Avalanche.</p>
+<p>Now the token. AVAX does three jobs. First, it's gas. Every transaction fee on the C-Chain is paid in AVAX, and those fees are burned. Burned means permanently removed from supply. Second, it's staking. People lock AVAX to secure the network and earn rewards. You can delegate to a validator with as little as 25 AVAX, or run your own validator with 2,000. Third, it's the security layer for the whole network, including those custom L1s.</p>
+<p>Supply is capped at 720 million AVAX. About half existed at launch, and the rest is released over time as staking rewards. So you have two forces: new AVAX created for stakers, and AVAX destroyed by fees. Which one wins depends on how much the network is used.</p>
+<p>One more milestone: ETFs. Since January there are now three US spot AVAX ETFs, and all three can stake. VanEck was first, ticker VAVX, launched in late January with a 0.20 percent fee. It stakes through Coinbase, which takes a 4 percent cut of the rewards. Grayscale followed in March with GAVA on Nasdaq. It converted from the Grayscale Avalanche Trust, holds its AVAX at Coinbase Custody, and charges 0.50 percent. Bitwise launched BAVA in April on NYSE Arca. It charges 0.34 percent and is the one that stakes in-house, targeting roughly 5 percent staking yield. All three can stake up to about 70 percent of holdings. In Europe there's also a 21Shares Avalanche staking ETP. The point: you can now get AVAX exposure plus staking rewards in a regular brokerage account, and that's a big door for traditional money. Assets in these funds are still small compared to Bitcoin and Ethereum ETFs, so treat it as a door opening, not a flood.</p>
+<table><tr><th>ETF</th><th>Ticker</th><th>Launch</th><th>Fee</th><th>Staking</th></tr>
+<tr><td>VanEck</td><td>VAVX</td><td>Late Jan 2026</td><td>0.20%</td><td>Via Coinbase, 4% of rewards</td></tr>
+<tr><td>Grayscale</td><td>GAVA (Nasdaq)</td><td>Mar 2026</td><td>0.50%</td><td>Up to ~70% staked</td></tr>
+<tr><td>Bitwise</td><td>BAVA (NYSE Arca)</td><td>Apr 2026</td><td>0.34%</td><td>In-house</td></tr></table>
+<p>As for price, AVAX was around eleven dollars on October 3rd, up roughly 48 percent over the previous 30 days. It was in the single digits earlier this year, so let's keep perspective: this is a volatile asset.</p></div>
+<div class="grid">
+<div class="stat"><b>720M</b><span>Max AVAX supply</span></div>
+<div class="stat"><b>25</b><span>AVAX to delegate</span></div>
+<div class="stat"><b>2,000</b><span>AVAX to run a validator</span></div>
+<div class="stat"><b>~$11</b><span>Price on Oct 3, 2026</span></div></div>
+<p class="src">SOURCES: stakingrewards.com · cryptovalleyjournal.com (Grayscale GAVA) · thedefiant.io (Bitwise BAVA) · bex.co (ETF fees) · cryptoticker.io (Oct 3 price)</p>
+</section>
+
+<!-- ============ M2 ============ -->
+<section class="mod" id="m2" data-t="9 min">
+<div class="tag">Module 2</div><h2>HELICON, PARTNERS &amp; <em>24/7 WALL STREET</em></h2><div class="meta">TARGET: 11 MIN · NETWORK UPGRADE · INSTITUTIONS · TOKENIZED STOCKS</div>
+<h3>The Helicon upgrade</h3>
+<div class="say">
+<p>Two weeks ago, on September 22nd, Avalanche activated its biggest staking upgrade ever. It's called Helicon, and it bundled six community proposals into one release.</p>
+<p>The headline change: the minimum staking period dropped from 14 days to 48 hours. That makes staking much more flexible, because you're not locked up for two weeks just to try it.</p>
+<p>Validators can now auto-renew their staking so they don't have to re-commit by hand. The uptime needed to earn rewards went up from 80 to 90 percent for new periods, so validators have to be more reliable. The reward curve is being recalibrated over 90 days, aimed at lowering how much new AVAX is issued.</p>
+<p>For us on the C-Chain, there are two important changes. First, something called Continuous Execution. The chain now accepts blocks into a queue and executes the transactions inside them concurrently, so confirmations stay fast and steady even when the network is busy. Second, the minimum gas price is now dynamic and set by validators instead of being a fixed number.</p>
+<p>And a lesson in markets: AVAX rallied about 25 percent in the week before Helicon, then fell about 8 percent after it went live. Traders call that sell the news. Good upgrades don't guarantee a rising price.</p></div>
+<h3>Who's building here</h3>
+<div class="say">
+<p>Now, who is actually using Avalanche? Avalanche itself names BlackRock, Apollo, Franklin Templeton, J.P. Morgan, Citi and KKR among institutions building on it.</p>
+<p>The clearest proof is real products. BlackRock's BUIDL tokenized treasury fund runs on Avalanche, with roughly 480 million dollars tracked there. Apollo tokenized a 50 million dollar credit fund on Avalanche in January. Janus Henderson has a tokenized AAA CLO fund there through Centrifuge. And New York Life Investment Management announced plans for its first tokenized fund on Avalanche, also through Centrifuge.</p>
+<p>Beyond finance: AWS is a cloud partner, FIFA and the state of Wyoming are on the list, and the Avalanche Payments Collective has grown to 29 member organizations.</p></div>
+<h3>24/7 tokenization</h3>
+<div class="say">
+<p>Here's where Wall Street comes in. Traditional stock markets are closed roughly 40 percent of the week. Tokenized stocks trade on a blockchain around the clock, and Avalanche is gaining ground fast.</p>
+<p>In the week ending September 25th, Avalanche pulled in about 131 million dollars of tokenized stock inflows. Over 30 days it added about 266 million dollars. Total tokenized stock holdings on Avalanche are around 428 million, which is fourth behind BNB Chain at about 1.1 billion, Ethereum at about 773 million, and Solana at about 723 million. But Avalanche is first in growth.</p>
+<p>The big name in the room is ICE, the company that owns the New York Stock Exchange. Reports say ICE has tested Avalanche for tokenized, 24/7 stock trading for about a year. But, and I want to be straight with you, ICE has not picked Avalanche or announced a deal. NYSE and BlackRock executives did speak at Avalanche Summit in New York in September, so the relationship is real. The commitment isn't confirmed.</p>
+<p>And here's the honest question: does Wall Street using Avalanche help the AVAX token? The bull case says fees are paid in AVAX and burned, and staking secures the chain. The bear case says banks can settle using stablecoins on private chains and never touch AVAX. One research firm, K33, even dropped AVAX from its favored list. So network adoption and token price are related, but they're not the same thing. That's exactly why we look at the DeFi apps built on top, which is the rest of tonight.</p></div>
+<table><tr><th>Chain</th><th>Tokenized stock holdings</th></tr><tr><td>BNB Chain</td><td>~$1.1B</td></tr><tr><td>Ethereum</td><td>~$773M</td></tr><tr><td>Solana</td><td>~$723M</td></tr><tr><td><b>Avalanche</b></td><td><b>~$428M</b> (first in 30-day growth)</td></tr></table>
+<h3>Aave v4 picks Avalanche</h3>
+<div class="say">
+<p>One more big signal. Aave is the largest lending protocol in DeFi, and its new version, Aave v4, chose Avalanche as its first deployment outside Ethereum. It went live on July 15th.</p>
+<p>Aave v4 uses a hub-and-spoke design: one Core Liquidity Hub that holds the shared pool of money, with specialized markets plugged into it. Because every market draws from one pool, liquidity stays deep instead of splitting up. On Avalanche there are three markets. The Main market is the general lending and borrowing venue. The AVAX Correlated market is for liquid staking: you can post sAVAX, Benqi's token from earlier, at a 95 percent collateral factor and borrow only WAVAX against it. And a Forex market lets you use euro and dollar stablecoins, EURC, USDC and USDT, against each other. Assets include WAVAX, sAVAX, BTC.b, USDC, USDT, WETH.e and EURC, with Chainlink oracles and the initial risk assessment by LlamaRisk.</p>
+<p>Why Avalanche? Aave has been there since 2021, with more than 15 billion dollars of cumulative inflows across versions 2 and 3, and coverage points to Avalanche's growing focus on tokenized real-world assets and institutional DeFi. On September 23rd the official Avalanche account said over 30 million dollars had been deposited into Aave v4 on Avalanche. Some outlets also report an RWA hub planned later, but Aave's own launch post doesn't mention one, so we'll treat that as unconfirmed.</p>
+<p>Notice the connection: BTC.b and sAVAX are the same assets we cover tonight. Avant's avBTC is minted from BTC.b, and Benqi's sAVAX is accepted as collateral on Aave v4. These projects stack together.</p></div>
+<p class="src">SOURCES: build.avax.network (Helicon) · tokenpost.com · blockchain.news · 247wallst.com (Sept 25) · cryptoticker.io (Oct 3) · avalanche.com/institutions · defillama.com (BUIDL) · aave.com/blog/aave-v4-live-avalanche · cryptotimes.io (Aave v4) · KuCoin News (@avax post, Sept 23)</p>
+</section>
+
+<!-- ============ M3 ============ -->
+<section class="mod" id="m3" data-t="8 min">
+<div class="tag">Module 3</div><h2><em>BENQI</em> — STAKE &amp; LEND</h2><div class="meta">TARGET: 8 MIN · app.benqi.fi · sAVAX · LENDING · RISK LESSON</div>
+<div class="say">
+<p>Let's go to our first project: Benqi. Think of Benqi as the base layer of Avalanche DeFi. It has four products. Liquid Staking, Markets for lending and borrowing, Ignite for launching validators, and Node Voting.</p>
+<p>The core idea is sAVAX. Normally, when you stake AVAX, it's locked. With Benqi you stake AVAX, and you get sAVAX back. sAVAX is a receipt whose value grows against AVAX as staking rewards come in. And the key part: you can still use sAVAX. Hold it, swap it, or put it to work as collateral.</p>
+<p>You can stake straight from the C-Chain, so you don't need to move funds over to the P-Chain yourself. Behind the scenes, Benqi delegates your AVAX to validators with a 35 to 65 split. Thirty-five percent goes to validators chosen by people voting with BENQI Miles, which you earn by staking the QI token. The other sixty-five percent goes to an open pool across all qualified validators.</p>
+<p>What's the yield? DefiLlama currently shows about 3.6 percent for sAVAX staking, with a 7-day figure near 6.3 percent and a 30-day average near 4.7 percent. So that rate moves around. Benqi lists a 15-day unstaking cooldown, but Helicon just changed staking rules, so check the app for the current wait. And remember you can usually just swap sAVAX back to AVAX on a DEX and skip the wait.</p>
+<p>Now Benqi Markets. This is the lending and borrowing side. You supply an asset to earn interest, or you deposit collateral and borrow against it. Core Markets handle liquid assets like AVAX and USDC. Benqi works with Chaos Labs to manage risk settings. DefiLlama shows around 92 million dollars of lending deposits, with about 36 million borrowed.</p>
+<p>This unlocks what people call the loop. Stake AVAX, receive sAVAX, deposit sAVAX as collateral, borrow stablecoins, and use those elsewhere. You're earning staking yield and deploying borrowed money at the same time. But it's leverage. If AVAX drops hard, you can be liquidated. Aggregators list roughly a 70 percent borrow limit on sAVAX, so never run anywhere near it.</p>
+<p>Now, a real-world lesson from this year. On May 4th, Chaos Labs spotted suspicious activity targeting its operational wallets. Benqi paused its Avalanche Ecosystem Markets as a precaution. Those markets relied on a single oracle, while Core Markets used two, Chainlink and the Chaos oracle, so Core stayed online. On May 14th Benqi announced it would wind down the ecosystem markets. Chaos Labs said its oracle network wasn't compromised and no user funds were lost.</p>
+<p>The lesson: even with audits, a single point of failure is a risk. Oracles feed prices into lending protocols, and a bad price can cause bad liquidations. Benqi's own docs list other standing risks: smart contract risk, upgradeable contracts controlled by a multisig, MPC infrastructure for cross-chain staking, and the possibility that sAVAX redemptions are delayed or its exchange rate drifts. Its audits include Halborn, Certora, Cyfrin and Dedaub.</p></div>
+<div class="grid">
+<div class="stat"><b>35/65</b><span>Community vote / open pool delegation</span></div>
+<div class="stat"><b>~3.6%</b><span>sAVAX staking yield (DefiLlama)</span></div>
+<div class="stat"><b>$92M</b><span>Lending TVL</span></div>
+<div class="stat"><b>80K+</b><span>Users reported for 2026</span></div></div>
+<p class="src">SOURCES: docs.benqi.fi (intro, risks &amp; audits) · iq.wiki/wiki/benqi · defillama.com yields · defiearns.com/SAVAX · chaoslabs.xyz</p>
+</section>
+
+<!-- ============ M4 ============ -->
+<section class="mod" id="m4" data-t="11 min">
+<div class="tag">Module 4</div><h2><em>PHARAOH</em> — PHAR, xPHAR &amp; p33</h2><div class="meta">TARGET: 13 MIN · phar.gg · x(3,3) · TOKENOMICS · AUTOPILOT</div>
+<div class="say">
+<p>Next: Pharaoh, at phar.gg. If Benqi is where you put AVAX to work, Pharaoh is where trading and liquidity happen. It's a concentrated liquidity exchange on the C-Chain, and it uses a model called x(3,3).</p>
+<p>Quick background. You've heard of Uniswap, where people provide liquidity and earn trading fees. A later design, ve(3,3), added a third group: token holders who lock their tokens and vote on where rewards go. The catch was long lockups. Pharaoh's x(3,3) keeps the voting and the fee rewards but removes the lockups. You can exit any time, with a cost. Let me show you how.</p>
+<p>Pharaoh is built on Ramses V3 technology, which is a Uniswap V3 style design. It now offers three types of liquidity in one place: concentrated, DLMM, and legacy pools. Fees are dynamic, starting as low as 0.05 percent in calm markets and rising up to five percent in extreme conditions to protect liquidity providers. DefiLlama shows about 47 million dollars in TVL and about 2.4 million dollars in fees over the last 30 days, with roughly 32 million in fees since launch.</p>
+<p>Now the token. PHAR is the base token. The initial supply is 750 million, split 187.5 million to the treasury and 562.5 million to people migrating from earlier versions. After burns, about 427.5 million. The maximum supply is one billion. First, a word you'll hear a lot: epoch. An epoch is just one week. Pharaoh runs in weekly cycles, and a new one starts every Thursday. Emissions, which are new PHAR paid out as rewards, start at 2.7 million PHAR in the first week and 5.4 million in the second. After the sixth week they shrink by one percent each week. They can also flex up or down by up to 25 percent based on revenue. And importantly, 100 percent of emissions go to liquidity pools. The docs say there's no team allocation.</p>
+<p>Next: xPHAR. This is the voting token. You get it by converting PHAR, and here's the key rule. When you convert, fifty percent of the PHAR is burned. So if you put in 100 PHAR, you end up with 50 xPHAR. The docs say the ratio is one to one on what's left after the burn. Please read that page with me on the screen.</p>
+<p>xPHAR can't be transferred. You stake it, and every week you vote on which pools get emissions. Epochs flip every Thursday at midnight UTC. In return, xPHAR stakers earn one hundred percent of protocol fees on the pools they voted for, plus vote incentives, plus penalties from people who exit. Vote incentives are sometimes called bribes: projects pay voters to send emissions to their pool. You must be staked and actually cast a vote to earn rewards for that epoch.</p>
+<p>What if you want out? Instant exit gives you only 50 percent of the underlying PHAR back. The forfeited half is burned, which benefits the people who stay. Or you exit by selling p33.</p>
+<p>That brings us to p33. p33 is the liquid staked version of xPHAR. Instead of voting and claiming every week yourself, p33 does it for you. It votes automatically, claims fees and vote incentives, sells them for PHAR, and compounds. The p33 to xPHAR ratio only goes up. There are no fees for deposits, withdrawals or compounding. And you can trade p33 freely on the market.</p>
+<p>Two rules. You can't mint new p33 during the hour before an epoch flip, and there's a 24 hour buyback window after it. Withdrawals still work during both. And p33 does not bypass the exit penalty: its market price tends to reflect that 50 percent redemption value, though it can trade at a premium.</p>
+<p>So, simple version. PHAR is the base token. xPHAR is you, hands on, voting and earning. p33 is the hands-off autopilot. For p33's current APR, I'll read the live number from the site.</p>
+<p>Before the risks, let's explain something you'll see on the Pharaoh pools page: really high APRs, sometimes in the thousands of percent. Where do those come from? Three simple ideas.</p>
+<p>One. APR is just a guess at what you'd earn in a year if this week's rewards kept coming every week. The page takes the rewards paid to the pool this epoch, which is this week, compares them to how much money is in the pool, and stretches that over a year.</p>
+<p>Two. The big number is the best case. In a concentrated pool you choose a price range, and the tighter the range, the harder your money works, and the higher the max APR. The headline shows the tightest range, and that only pays while the price stays inside it. Step outside and you earn nothing.</p>
+<p>Three. Most of it isn't trading fees. It's reward tokens. Pharaoh pays PHAR and incentives from projects to attract people to pools. That's the Epoch Rewards column. You're paid in those tokens, not in dollars, and you have to sell them to cash out. If the PHAR price drops, your real APR drops with it.</p>
+<p>Here's a quick reality check. Take the AVAX and USDC pool with about 4 million dollars in it and about 175 thousand dollars of rewards this week. That's roughly 4.5 percent for the week, or a couple of hundred percent a year, if nothing changes. That's a real number, but it's well over a hundred times lower than the max APR on the screen. Compare that with the savUSD and avUSD pool, which pays only fees and shows about 0.2 percent. Strip out the reward tokens, and the yield almost disappears. So when you see a huge APR, ask three questions: is it paid in reward tokens, is it for the tightest range, and what happens to it if the price moves or the token falls?</p>
+<p>Now risks. Pharaoh's own docs say its audit reports cover the Ramses V3 and Shadow Exchange x(3,3) code bases, not a full Pharaoh-specific deployment. The firms are Spearbit, Consensys Diligence and Code4rena. Yield leans on PHAR emissions, so if the PHAR price falls, real yield falls. On CoinGecko, depth on the PHAR/WAVAX pair was only around seven and a half thousand dollars within two percent, so big trades move the price. And concentrated liquidity means if your price range goes out of range, you stop earning, so it needs active management.</p></div>
+<div class="box"><h4>Why the APRs look so high</h4><ul><li><b>Epoch</b> = one week, resets Thursday</li><li><b>Max APR</b> = tightest price range, best case only</li><li><b>Paid in reward tokens</b> (PHAR + incentives), not dollars</li><li><b>Real average</b> = weekly rewards ÷ pool size × 52</li></ul></div>
+<table><tr><th></th><th>xPHAR</th><th>p33</th></tr>
+<tr><td>Transferable</td><td>No</td><td>Yes</td></tr><tr><td>Voting</td><td>You, each epoch</td><td>Automated</td></tr><tr><td>Rewards</td><td>You claim</td><td>Auto-compounded</td></tr><tr><td>Exit</td><td>50% penalty direct</td><td>Sell on market</td></tr></table>
+<div class="grid">
+<div class="stat"><b>$47M</b><span>TVL (DefiLlama)</span></div>
+<div class="stat"><b>$2.4M</b><span>Fees, last 30 days</span></div>
+<div class="stat"><b>1B</b><span>Max PHAR supply</span></div>
+<div class="stat"><b>50%</b><span>Burned on mint and lost on instant exit</span></div></div>
+<p class="src">SOURCES: docs.phar.gg (x-33, xphar, tokenomics, audits, glossary) · defillama.com/protocol/pharaoh-exchange · coingecko.com/en/coins/pharaoh</p>
+</section>
+
+<!-- ============ M5 ============ -->
+<section class="mod" id="m5" data-t="9 min">
+<div class="tag">Module 5</div><h2><em>AVANT</em> — BITCOIN YIELD</h2><div class="meta">TARGET: 9 MIN · app.avantprotocol.com · avBTC · savBTC · avBTCx</div>
+<div class="say">
+<p>Our third project is Avant, and this is the one a lot of you asked about, because of the Bitcoin yield.</p>
+<p>Avant is a DeFi protocol built on Avalanche that turns assets into yield-bearing tokens. The press has compared it to Ethena. It was founded in 2024 and raised 6.5 million dollars in a seed round in November 2024. The money you deposit is deployed in market-neutral strategies run by specialist trading partners. Avant has three families: USD, ETH and Bitcoin. Defillama shows about 155 million dollars total across Avant, mostly on Avalanche. The Bitcoin side is the small slice, roughly six to nine million.</p>
+<p>Here's how the Bitcoin tokens work. It's a ladder with three rungs.</p>
+<p>Rung one: avBTC. You deposit BTC.b, which is Bitcoin on Avalanche's C-Chain, and mint avBTC one to one. avBTC itself earns no yield. It's the entry and exit point.</p>
+<p>Rung two: savBTC, the senior tranche. You stake avBTC and receive savBTC. Its value grows daily, so when you unstake you get back more avBTC than you put in. That means you earn yield in more Bitcoin, not in dollars. Unstaking takes about one day, and no yield accrues during that day.</p>
+<p>Rung three: avBTCx, the junior tranche. This is the boosted version. It gets the base yield plus an extra ten percent share of the total yield from the main avBTC strategy. In return, it takes losses first. Its value updates weekly, and exiting takes a one week cooldown.</p>
+<p>Let me explain tranches in the simplest way I can. A tranche is just a slice. Avant takes all the Bitcoin that's been deposited and runs it through its strategies as one big pot. Then it offers you two ways to hold a share of that pot, and the difference is who gets hurt first if something goes wrong, and who gets paid extra for taking that risk.</p>
+<p>Picture a three-floor building, with the water rising from the bottom. The basement is the Reserve Fund, which is Avant's own safety cushion. The middle floor is avBTCx, the junior tranche. The top floor is savBTC, the senior tranche. If there's a loss, the water hits the basement first. The Reserve Fund pays first. Only if the loss is bigger than the Reserve Fund does it reach avBTCx holders, whose balance takes the hit next. And only if that's wiped out too does it reach savBTC. So savBTC is protected by two layers underneath it.</p>
+<p>Now the pay. Because avBTCx stands in the middle and takes losses before savBTC, it gets paid more. It earns the base yield, plus an extra ten percent share of the strategy yield. Think of it as hazard pay. savBTC sits higher up, safer, so it earns the plain base yield. That's why you see about 4.7 to 5.6 percent for savBTC and about 6.45 percent for avBTCx.</p>
+<p>A quick example with made-up numbers, just to show the order. Say the pot has a 1 percent loss. The Reserve Fund covers it, and nobody holding savBTC or avBTCx notices. Say it's a much bigger loss. The Reserve Fund is used up, then avBTCx holders see their value drop, and savBTC is untouched unless the loss is bigger still. In good times, everyone is paid, and avBTCx is paid a little more. In bad times, avBTCx is hurt first.</p>
+<p>So here's the rule of thumb. Want steadier and simpler? savBTC, with a one day exit. Willing to take more risk for a bit more yield, and okay with a one week exit and weekly updates? avBTCx. And remember that it's all still Bitcoin: yield arrives as more BTC, not dollars. Neither tranche is guaranteed, and a loss large enough to wipe out the Reserve Fund and the junior tranche would reach savBTC too.</p>
+<p>Now the numbers you liked. Avant posts weekly updates. In recent posts, savBTC showed a projected 24-hour APY of about 4.7 to 5.6 percent, and avBTCx showed about 6.45 percent. Let's pull up the live rate in the app. For comparison, the largest Bitcoin lending pools on Aave pay close to zero on WBTC, and Lombard's LBTC shows around half a percent on DefiLlama. So Bitcoin earning four to six percent is notable. Also remember the savBTC number is a forward-looking daily estimate, while avBTCx shows what was actually paid last week. Neither is a guarantee. At launch in 2025, test yields were over ten percent and in August 2025 a weekly post showed 7.78 percent. So BTC yield has drifted lower.</p>
+<p>Where does the yield come from? Avant lists several strategy types. Basis trades: hold spot and short futures to collect the funding rate, designed to be market neutral. Lending rate arbitrage across lending protocols. Yield trading on markets like Pendle. Lending on platforms like Aave. And liquidity provision on DEXs. Avant takes a ten percent performance fee on net profit, plus a variable fee to its trading partners.</p>
+<p>What protects you? Weekly independent valuation by Pennyworks, round-the-clock monitoring with Hypernative, publicly listed strategy wallets, and a transparency page. Avant's contracts are documented as having no critical audit findings.</p>
+<p>But let me be direct about risk. Market neutral does not mean risk free. Funding rates can fall or flip negative. Exchanges and counterparties can fail. Audits check code, not strategy risk. The junior tranche can lose money before the senior one does. And exits aren't instant: a base redemption can take up to seven days. Start small, and learn which rung you are on.</p></div>
+<table><tr><th>Question</th><th>savBTC (senior)</th><th>avBTCx (junior)</th></tr>
+<tr><td>Where it sits</td><td>Top floor, protected by two layers</td><td>Middle floor, after the Reserve Fund</td></tr>
+<tr><td>Who takes a loss first?</td><td>Last</td><td>Before savBTC</td></tr>
+<tr><td>Extra pay</td><td>Base yield</td><td>Base + extra 10% share of strategy yield</td></tr>
+<tr><td>Exit / updates</td><td>~1 day / daily</td><td>~1 week / weekly</td></tr></table>
+<table><tr><th>Token</th><th>Role</th><th>Yield</th><th>Exit</th></tr>
+<tr><td>avBTC</td><td>Base, 1:1 with BTC.b</td><td>None</td><td>Redeem (hours up to 7 days)</td></tr>
+<tr><td>savBTC</td><td>Senior tranche</td><td>Daily accrual, paid in BTC</td><td>~1 day cooldown</td></tr>
+<tr><td>avBTCx</td><td>Junior tranche (first loss)</td><td>Base + 10% extra share, updates weekly</td><td>~1 week cooldown</td></tr></table>
+<p class="src">SOURCES: docs.avantprotocol.com (core tokens, yield generation, fees, risk management, APY metrics) · defillama.com (avant-protocol, avant-avbtc) · tracxn.com · partners.circle.com · Avant posts on X</p>
+</section>
+
+<!-- ============ M6 ============ -->
+<section class="mod" id="m6" data-t="3 min">
+<div class="tag">Module 6</div><h2>PUTTING IT <em>TOGETHER</em></h2><div class="meta">TARGET: 3 MIN · WRAP-UP</div>
+<div class="say">
+<p>Let's tie it together. Think of three layers. Benqi is the base layer: stake AVAX, get sAVAX, lend and borrow. Pharaoh is the liquidity layer: trade, vote and earn fees, with xPHAR if you're hands-on and p33 if you want autopilot. Avant is the Bitcoin layer: turn BTC.b into avBTC, then pick savBTC for the senior route or avBTCx for the junior one.</p>
+<p>All three run on the C-Chain, all three are paid for with AVAX gas, and higher yield always comes with a trade-off: liquidation risk at Benqi, emissions and thin liquidity at Pharaoh, strategy and counterparty risk at Avant.</p>
+<p>Here's what I want you to remember. The C-Chain is the home of Avalanche DeFi. Institutions and tokenized stocks are growing there, but network growth doesn't guarantee the AVAX price. Start small. Never put in what you can't afford to lose. Now let's check what you learned.</p></div>
+<table><tr><th></th><th>Benqi</th><th>Pharaoh</th><th>Avant (BTC)</th></tr>
+<tr><td>Role</td><td>Staking and lending</td><td>DEX and incentives</td><td>BTC yield tokens</td></tr>
+<tr><td>Yield source</td><td>Staking, interest</td><td>Fees, PHAR emissions</td><td>Market-neutral strategies</td></tr>
+<tr><td>Main risk</td><td>Liquidation, oracle</td><td>Emissions, thin liquidity</td><td>Strategy, counterparty</td></tr>
+<tr><td>Exit</td><td>Swap or unstake</td><td>Sell p33 or 50% exit</td><td>1 day / 1 week</td></tr></table>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="mod" id="quiz" data-t="Quiz">
+<div class="tag">Final</div><h2>THE <em>QUIZ</em></h2><div class="meta">22 QUESTIONS · CLICK AN ANSWER FOR INSTANT FEEDBACK</div>
+<div id="qs"></div>
+<div class="box"><h4>Your score</h4><div id="score">0 / 22</div><p id="verdict" style="color:var(--mute)"></p><button class="main" onclick="location.reload()">RETAKE</button></div>
+<p class="src" style="margin-top:30px">Live figures (prices, APRs, TVL) change constantly. Confirm on screen. Educational only, not financial advice.</p>
+</section>
+</main>
+
+<script>
+var mods=[['m1','What is AVAX','8m'],['m2','Helicon, Partners, Aave v4, 24/7','11m'],['m3','Benqi','8m'],['m4','Pharaoh','13m'],['m5','Avant','9m'],['m6','Wrap-up','3m'],['quiz','Quiz','']];
+var L=document.getElementById('links');
+mods.forEach(function(m){var a=document.createElement('a');a.href='#'+m[0];a.innerHTML=m[1]+'<span>'+m[2]+'</span>';L.appendChild(a)});
+var Q=[
+['What does "epoch" mean at Pharaoh?',['One day','One week, starting each Thursday','One month','One year'],1,'An epoch is a weekly cycle. Voting, emissions and rewards reset each Thursday.'],
+['Why are some Pharaoh pool APRs in the thousands of percent?',['Trading fees alone are that large','It is the best case for the tightest price range and is mostly paid in reward tokens','The pool is guaranteed','They are audited numbers'],1,'Max APR assumes a very narrow range and counts reward tokens like PHAR, which are paid out weekly and can fall in value.'],
+['In Avant\'s BTC tranches, who absorbs a loss first?',['savBTC holders','The Reserve Fund, then avBTCx, then savBTC','All holders equally','avBTC only'],1,'Loss order: Reserve Fund first, then the junior tranche (avBTCx), and only then the senior tranche (savBTC). avBTCx earns more because it takes that risk.'],
+['Which statement about US spot AVAX ETFs is correct?',['Only VanEck has one','VanEck (VAVX), Grayscale (GAVA) and Bitwise (BAVA) all exist and can stake','They cannot stake','They are only in Europe'],1,'Three US spot AVAX ETFs launched Jan to Apr 2026: VanEck VAVX, Grayscale GAVA and Bitwise BAVA, each able to stake.'],
+['What was notable about Aave v4 on Avalanche?',['It was Aave\'s first v4 deployment outside Ethereum, live July 15','Aave left Avalanche','It only supports stablecoins','It replaced Benqi'],0,'Avalanche was the first v4 deployment beyond Ethereum mainnet, with Main, AVAX Correlated and Forex markets on a shared hub.'],
+['Which asset can be posted as collateral at a 95% factor in Aave v4\'s AVAX Correlated market?',['USDC','sAVAX','avBTC','PHAR'],1,'In that market you supply sAVAX and can borrow only WAVAX.'],
+['How many chains make up Avalanche\'s Primary Network, and which one runs EVM smart contracts?',['Two; the P-Chain','Three; the C-Chain','Four; the X-Chain','One; the C-Chain'],1,'The Primary Network has the X-, P- and C-Chains. The C-Chain is EVM-compatible and hosts Benqi, Pharaoh and Avant.'],
+['What is AVAX\'s maximum supply?',['100 million','360 million','720 million','1 billion'],2,'AVAX is capped at 720M; half existed at genesis and the rest is released as staking rewards.'],
+['What happens to transaction fees paid in AVAX on the C-Chain?',['They go to validators','They are burned','They go to the Foundation','They are staked'],1,'Fees are burned, permanently reducing supply.'],
+['What did the Helicon upgrade (Sept 22) change about staking?',['Minimum staking period dropped from 14 days to 48 hours','Staking was disabled','Minimum rose to 30 days','AVAX supply cap was removed'],0,'Helicon cut the minimum from 14 days (336 hours) to 48 hours and added auto-renewal.'],
+['What is the honest status of ICE (NYSE\'s parent) and Avalanche?',['ICE chose Avalanche exclusively','ICE has tested it for about a year but has not committed','ICE rejected Avalanche','ICE bought AVAX'],1,'Reports say ICE has tested 24/7 tokenized trading but has not selected Avalanche or announced a deal.'],
+['What does sAVAX represent?',['A stablecoin','Staked AVAX whose value rises vs. AVAX as rewards accrue','A governance token','A wrapped BTC'],1,'sAVAX is Benqi\'s liquid staking token; it can be held, swapped or used as collateral.'],
+['What did the May 2026 Benqi incident teach?',['Audits eliminate all risk','A single oracle is a single point of failure','Lending is risk-free','Core Markets were shut down'],1,'Ecosystem Markets used one oracle and were paused then wound down; Core Markets used two (Chainlink + Chaos) and stayed up.'],
+['The "loop" strategy at Benqi (sAVAX as collateral, borrow, redeploy) adds mainly what risk?',['Gas risk','Liquidation risk from leverage','Tax risk','Bridge risk'],1,'Borrowing against sAVAX is leverage; a sharp price drop can trigger liquidation.'],
+['What is the maximum supply of PHAR?',['100 million','427.5 million','750 million','1 billion'],3,'Initial supply is 750M (about 427.5M after burns) with a 1B cap.'],
+['What happens when you convert PHAR into xPHAR, per Pharaoh\'s docs?',['Nothing is burned','50% of the PHAR used is burned','100% is burned','It is locked for a year'],1,'Docs say 50% of the PHAR used in the mint is burned.'],
+['What does instant exit from xPHAR return?',['100% of the underlying PHAR','50% of the underlying PHAR','25%','Nothing'],1,'Direct redemption returns 50%; the forfeited half is burned.'],
+['What is p33?',['A stablecoin','The liquid-staked, auto-voting, auto-compounding version of xPHAR','A bridge token','An NFT'],1,'p33 automates votes and claims, compounds rewards, and can be traded freely.'],
+['What do you need to do to earn xPHAR rewards in an epoch?',['Just hold it','Be staked and cast votes','Hold PHAR','Provide liquidity'],1,'Active staking and voting are required for that epoch\'s rewards.'],
+['What backs avBTC at Avant?',['USDC','ETH','BTC.b on Avalanche','kBTC only'],2,'avBTC is minted 1:1 from BTC.b.'],
+['Which Avant token takes losses first (after the Reserve Fund)?',['avBTC','savBTC','avBTCx','AVAX'],2,'avBTCx is the junior tranche and absorbs losses before the senior savBTC.'],
+['Which statement about Avant\'s BTC yield is correct?',['It is guaranteed','It comes from market-neutral strategies and is paid in more BTC, not guaranteed','It is paid in USDC','It never changes'],1,'Yield accrues in-kind from strategies such as basis trades; APYs are estimates, not guarantees.']
+];
+var done=0,sc=0,box=document.getElementById('qs');
+Q.forEach(function(q,i){
+ var d=document.createElement('div');d.className='q';
+ var h='<p class="qt">'+(i+1)+'. '+q[0]+'</p>';
+ q[1].forEach(function(o,j){h+='<label data-j="'+j+'">'+o+'</label>'});
+ h+='<div class="ex"><b>Answer:</b> '+q[3]+'</div>';d.innerHTML=h;box.appendChild(d);
+ d.addEventListener('click',function(e){
+  var l=e.target.closest('label');if(!l||d.classList.contains('done'))return;
+  d.classList.add('done');var j=+l.dataset.j;
+  if(j===q[2]){l.classList.add('ok');sc++}else{l.classList.add('no');d.querySelector('[data-j="'+q[2]+'"]').classList.add('ok')}
+  done++;document.getElementById('score').textContent=sc+' / '+Q.length;
+  if(done===Q.length){var p=sc/Q.length;document.getElementById('verdict').textContent=p>=.85?'Excellent. You really know the AVAX stack.':p>=.6?'Solid. Review the modules you missed.':'Worth another pass through the modules.'}
+ });
+});
+var s=0,iv=null,T=document.getElementById('t');
+function f(){var m=Math.floor(s/60),x=s%60;T.textContent=('0'+m).slice(-2)+':'+('0'+x).slice(-2)}
+document.getElementById('go').onclick=function(){if(iv){clearInterval(iv);iv=null;this.textContent='START'}else{iv=setInterval(function(){s++;f()},1000);this.textContent='PAUSE'}};
+document.getElementById('rs').onclick=function(){s=0;f()};
+var as=[].slice.call(L.querySelectorAll('a'));
+addEventListener('scroll',function(){var y=scrollY+200,c=0;mods.forEach(function(m,k){var e=document.getElementById(m[0]);if(e&&e.offsetTop<=y)c=k});as.forEach(function(a,k){a.classList.toggle('on',k===c)})});
+</script>
+</body>
+</html>
